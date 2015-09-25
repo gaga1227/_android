@@ -2,10 +2,18 @@ package com.ggg.mathgamechapter2;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class GameActivity extends AppCompatActivity {
+public class GameActivity extends AppCompatActivity implements View.OnClickListener {
+
+    //vars
+    int correctAnswer;
+    boolean answerPicked = false;
+    Button buttonAnswers[] = new Button[3];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -15,7 +23,7 @@ public class GameActivity extends AppCompatActivity {
         //Here we initialize all our variables
         int partA = 9;
         int partB = 9;
-        int correctAnswer = partA * partB;
+        correctAnswer = partA * partB;
         int wrongAnswer1 = correctAnswer - 1;
         int wrongAnswer2 = correctAnswer + 1;
 
@@ -27,9 +35,9 @@ public class GameActivity extends AppCompatActivity {
         */
         TextView textObjectPartA = (TextView)findViewById(R.id.textPartA);
         TextView textObjectPartB = (TextView)findViewById(R.id.textPartB);
-        Button buttonObjectChoice1 = (Button)findViewById(R.id.buttonChoice1);
-        Button buttonObjectChoice2 = (Button)findViewById(R.id.buttonChoice2);
-        Button buttonObjectChoice3 = (Button)findViewById(R.id.buttonChoice3);
+        buttonAnswers[0] = (Button)findViewById(R.id.buttonChoice1);
+        buttonAnswers[1] = (Button)findViewById(R.id.buttonChoice2);
+        buttonAnswers[2] = (Button)findViewById(R.id.buttonChoice3);
 
         //Now we use the setText method of the class on our objects
         //to show our variable values on the UI elements.
@@ -39,8 +47,64 @@ public class GameActivity extends AppCompatActivity {
         textObjectPartA.setText("" + partA);
         textObjectPartB.setText("" + partB);
         //which button receives which answer, at this stage is arbitrary.
-        buttonObjectChoice1.setText("" + correctAnswer);
-        buttonObjectChoice2.setText("" + wrongAnswer1);
-        buttonObjectChoice3.setText("" + wrongAnswer2);
+        buttonAnswers[0].setText("" + correctAnswer);
+        buttonAnswers[1].setText("" + wrongAnswer1);
+        buttonAnswers[2].setText("" + wrongAnswer2);
+
+        //register button events
+        buttonAnswers[0].setOnClickListener(this);
+        buttonAnswers[1].setOnClickListener(this);
+        buttonAnswers[2].setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        //skip if already answered
+        if (answerPicked) {
+            return;
+        }
+
+        //set answered flag
+        answerPicked = true;
+
+        //get answer from click event target
+        Button buttonClicked = (Button)view;
+        int answerGiven = Integer.parseInt("" +  buttonClicked.getText());
+
+        //prep toast message
+        Toast toastMsg = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_LONG);
+        TextView toastMsgTextView = (TextView)toastMsg.getView()
+                .findViewById(android.R.id.message);
+        String toastMsgText;
+
+        //check answer
+        if (answerGiven == correctAnswer) {
+            toastMsgText = "Well done!";
+        } else {
+            toastMsgText = "Sorry,\n" + "that's wrong!";
+        }
+
+        //display toast message
+        if( toastMsgTextView != null) {
+            toastMsgTextView.setGravity(Gravity.CENTER);
+            toastMsgTextView.setText(toastMsgText);
+            toastMsg.show();
+        }
+
+        //update buttons
+        for (int i = 0; i < buttonAnswers.length; i++) {
+            //update clicked button theme
+            if (buttonAnswers[i] == buttonClicked) {
+                if (answerGiven == correctAnswer) {
+                    buttonClicked.setBackgroundColor(0xFF27AE60);
+                } else {
+                    buttonClicked.setBackgroundColor(0xFFFF0000);
+                }
+                buttonClicked.setTextColor(0xFFFFFFFF);
+            }
+
+            //prevent further click
+            buttonAnswers[i].setEnabled(false);
+        }
     }
 }
