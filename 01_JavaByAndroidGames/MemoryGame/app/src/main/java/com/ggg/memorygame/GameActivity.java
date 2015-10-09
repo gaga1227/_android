@@ -1,5 +1,6 @@
 package com.ggg.memorygame;
 
+import android.content.SharedPreferences;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.content.res.AssetFileDescriptor;
@@ -9,9 +10,11 @@ import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Handler;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.Random;
@@ -54,10 +57,23 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 	//thread handler
 	private Handler myHandler;
 
+	//for our high score
+	SharedPreferences prefs;
+	SharedPreferences.Editor editor;
+	String dataName = "MyData";
+	String intName = "MyInt";
+	int defaultInt = 0;
+	int hiScore;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_game);
+
+		//initialize our two SharedPreferences objects
+		prefs = getSharedPreferences(dataName, MODE_PRIVATE);
+		hiScore = prefs.getInt(intName, defaultInt);
+		editor = prefs.edit(); //to put and commit
 
 		//create sound pool
 		if ((android.os.Build.VERSION.SDK_INT) >= 21) {
@@ -115,6 +131,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
 				if (playSequence) {
 					//All the thread action will go here
+					_playSequenceStep();
 				}
 
 				//send next one in 900ms
@@ -124,6 +141,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
 		//kick of thread
 		myHandler.sendEmptyMessage(0);
+
+		//start game
+		playASequence();
 	};
 
 	/**
@@ -133,7 +153,51 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 	 */
 	@Override
 	public void onClick(View v) {
+		//only accept input if sequence not playing
+		if(!playSequence) {
+			int responseStep = 0;
 
+			switch (v.getId()) {
+				//sequence responses
+				case R.id.button1:
+					//play a sound
+					soundPool.play(sample1, 1, 1, 0, 0, 1);
+					checkElement(1);
+					responseStep = 1;
+					break;
+				case R.id.button2:
+					//play a sound
+					soundPool.play(sample2, 1, 1, 0, 0, 1);
+					checkElement(2);
+					responseStep = 2;
+					break;
+				case R.id.button3:
+					//play a sound
+					soundPool.play(sample3, 1, 1, 0, 0, 1);
+					checkElement(3);
+					responseStep = 3;
+					break;
+				case R.id.button4:
+					//play a sound
+					soundPool.play(sample4, 1, 1, 0, 0, 1);
+					checkElement(4);
+					responseStep = 4;
+					break;
+
+				//reset game status
+				case R.id.buttonReplay:
+					difficultyLevel = 3;
+					playerScore = 0;
+					textScore.setText("Score: " + playerScore);
+					playASequence();
+					break;
+			}
+
+			//log
+			if (responseStep > 0) {
+				Log.i("info", "Step response: " + responseStep);
+			}
+		}
 	}
 
 	//function - update all text views
@@ -152,6 +216,55 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 		//set values
 		textScore.setText("Score: " + playerScore);
 		textDifficulty.setText("Level: " + difficultyLevel);
+	}
+
+	//play a sequence step
+	private void _playSequenceStep() {
+		//make sure all the buttons are made visible
+		button1.setVisibility(View.VISIBLE);
+		button2.setVisibility(View.VISIBLE);
+		button3.setVisibility(View.VISIBLE);
+		button4.setVisibility(View.VISIBLE);
+
+		//play step from a sequence
+		int step = sequenceToCopy[elementToPlay];
+		switch (step) {
+			case 1:
+				//hide a button
+				button1.setVisibility(View.INVISIBLE);
+				//play a sound
+				soundPool.play(sample1, 1, 1, 0, 0, 1);
+				break;
+			case 2:
+				//hide a button
+				button2.setVisibility(View.INVISIBLE);
+				//play a sound
+				soundPool.play(sample2, 1, 1, 0, 0, 1);
+				break;
+			case 3:
+				//hide a button
+				button3.setVisibility(View.INVISIBLE);
+				//play a sound
+				soundPool.play(sample3, 1, 1, 0, 0, 1);
+				break;
+			case 4:
+				//hide a button
+				button4.setVisibility(View.INVISIBLE);
+				//play a sound
+				soundPool.play(sample4, 1, 1, 0, 0, 1);
+				break;
+		}
+
+		//log
+		Log.i("info", "Step: " + step);
+
+		//move to next step
+		elementToPlay++;
+
+		//check if reachec sequence end
+		if (elementToPlay == difficultyLevel) {
+			sequenceFinished();
+		}
 	}
 
 	//functions - game sequence
@@ -195,5 +308,50 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 		button4.setVisibility(View.VISIBLE);
 		textWatchGo.setText("GO!");
 		isResponding = true;
+	}
+
+	//check user response against generated sequence
+	public void checkElement(int thisElement) {
+		if (isResponding) {
+			//increment response step
+			playerResponses++;
+
+			//step response is correct
+			if (sequenceToCopy[playerResponses - 1] == thisElement) {
+				//update score
+				playerScore = playerScore + ((thisElement + 1) * 2);
+				textScore.setText("Score: " + playerScore);
+
+				//if got the whole sequence
+				if (playerResponses == difficultyLevel) {
+					//don't checkElement anymore
+					isResponding = false;
+					//now raise the difficulty
+					difficultyLevel++;
+					//and play another sequence
+					playASequence();
+				}
+			}
+			//step response incorrect
+			else {
+				textWatchGo.setText("FAILED!");
+
+				//don't checkElement anymore
+				isResponding = false;
+
+				//store new high score if achieved
+				if (playerScore > hiScore) {
+					hiScore = playerScore;
+					editor.putInt(intName, hiScore);
+					editor.commit();
+
+					//notify in UI
+					Toast.makeText(getApplicationContext(), "New High Score", Toast.LENGTH_LONG).show();
+
+					//log
+					Log.i("info", "Store new high score: " + hiScore);
+				}
+			}
+		}
 	}
 }
