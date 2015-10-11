@@ -12,6 +12,8 @@ import android.os.Handler;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,7 +21,7 @@ import android.widget.Toast;
 import java.io.IOException;
 import java.util.Random;
 
-public class GameActivity extends AppCompatActivity implements View.OnClickListener {
+public class GameActivity extends AppCompatActivity implements View.OnClickListener, Animation.AnimationListener {
 
 	//Prepare objects and sound references
 
@@ -65,10 +67,17 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 	int defaultInt = 0;
 	int hiScore;
 
+	//UI animation
+	Animation wobble;
+	boolean animIsPlaying = false;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_game);
+
+		//load animation
+		wobble = AnimationUtils.loadAnimation(this, R.anim.wobble);
 
 		//initialize our two SharedPreferences objects
 		prefs = getSharedPreferences(dataName, MODE_PRIVATE);
@@ -135,7 +144,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 				}
 
 				//send next one in 900ms
-				myHandler.sendEmptyMessageDelayed(0, 900);
+				myHandler.sendEmptyMessageDelayed(0, 1000);
 			}
 		};//end of thread handler
 
@@ -154,7 +163,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 	@Override
 	public void onClick(View v) {
 		//only accept input if sequence not playing
-		if(!playSequence) {
+		if(!playSequence && !animIsPlaying) {
 			int responseStep = 0;
 
 			switch (v.getId()) {
@@ -200,6 +209,41 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 		}
 	}
 
+	/**
+	 * <p>Notifies the start of the animation.</p>
+	 *
+	 * @param animation The started animation.
+	 */
+	@Override
+	public void onAnimationStart(Animation animation) {
+		if (animation == wobble) {
+			animIsPlaying = true;
+		}
+	}
+
+	/**
+	 * <p>Notifies the end of the animation. This callback is not invoked
+	 * for animations with repeat count set to INFINITE.</p>
+	 *
+	 * @param animation The animation which reached its end.
+	 */
+	@Override
+	public void onAnimationEnd(Animation animation) {
+		if (animation == wobble) {
+			animIsPlaying = false;
+		}
+	}
+
+	/**
+	 * <p>Notifies the repetition of the animation.</p>
+	 *
+	 * @param animation The animation which was repeated.
+	 */
+	@Override
+	public void onAnimationRepeat(Animation animation) {
+
+	}
+
 	//function - update all text views
 	private void _updateTextViews() {
 		//assign text view refs
@@ -220,36 +264,31 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
 	//play a sequence step
 	private void _playSequenceStep() {
-		//make sure all the buttons are made visible
-		button1.setVisibility(View.VISIBLE);
-		button2.setVisibility(View.VISIBLE);
-		button3.setVisibility(View.VISIBLE);
-		button4.setVisibility(View.VISIBLE);
 
 		//play step from a sequence
 		int step = sequenceToCopy[elementToPlay];
 		switch (step) {
 			case 1:
-				//hide a button
-				button1.setVisibility(View.INVISIBLE);
+				//anim a button
+				button1.startAnimation(wobble);
 				//play a sound
 				soundPool.play(sample1, 1, 1, 0, 0, 1);
 				break;
 			case 2:
-				//hide a button
-				button2.setVisibility(View.INVISIBLE);
+				//anim a button
+				button2.startAnimation(wobble);
 				//play a sound
 				soundPool.play(sample2, 1, 1, 0, 0, 1);
 				break;
 			case 3:
-				//hide a button
-				button3.setVisibility(View.INVISIBLE);
+				//anim a button
+				button3.startAnimation(wobble);
 				//play a sound
 				soundPool.play(sample3, 1, 1, 0, 0, 1);
 				break;
 			case 4:
-				//hide a button
-				button4.setVisibility(View.INVISIBLE);
+				//anim a button
+				button4.startAnimation(wobble);
 				//play a sound
 				soundPool.play(sample4, 1, 1, 0, 0, 1);
 				break;
@@ -261,7 +300,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 		//move to next step
 		elementToPlay++;
 
-		//check if reachec sequence end
+		//check if reached sequence end
 		if (elementToPlay == difficultyLevel) {
 			sequenceFinished();
 		}
@@ -293,19 +332,21 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 		elementToPlay = 0;
 		playerResponses = 0;
 		textWatchGo.setText("WATCH!");
-		//start playing
-		playSequence = true;
+
+		//start sequence with a delay
+		new Handler().postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				//start playing
+				playSequence = true;
+			}
+		}, 1000);
 	}
 
 	public void sequenceFinished(){
 		//stop playing
 		playSequence = false;
 		//prep vars and view
-		//make sure all the buttons are made visible
-		button1.setVisibility(View.VISIBLE);
-		button2.setVisibility(View.VISIBLE);
-		button3.setVisibility(View.VISIBLE);
-		button4.setVisibility(View.VISIBLE);
 		textWatchGo.setText("GO!");
 		isResponding = true;
 	}
