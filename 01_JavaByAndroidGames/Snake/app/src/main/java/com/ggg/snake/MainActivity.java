@@ -14,6 +14,7 @@ import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -82,7 +83,7 @@ public class MainActivity extends Activity {
 		menuLayout.addView(this.snakeAnimView);
 
 		//game activity intent
-		//intent = new Intent(this, GameActivity.class);
+		intent = new Intent(this, GameActivity.class);
 	}
 
 	/**
@@ -107,6 +108,19 @@ public class MainActivity extends Activity {
 			startActivity(intent);
 		}
 		return true;
+	}
+
+	/**
+	 * onKeyDown
+	 * @param keyCode
+	 * @param event
+	 * @return
+	 */
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			return true;
+		}
+		return false;
 	}
 
 	/**
@@ -162,7 +176,6 @@ public class MainActivity extends Activity {
 
 		SurfaceHolder ourHolder;
 		Canvas canvas;
-		Paint paint;
 
 		volatile boolean playingMenu;
 
@@ -201,7 +214,6 @@ public class MainActivity extends Activity {
 		private void _init() {
 			//assign refs
 			this.ourHolder = getHolder();
-			this.paint = new Paint();
 		}
 
 		/**
