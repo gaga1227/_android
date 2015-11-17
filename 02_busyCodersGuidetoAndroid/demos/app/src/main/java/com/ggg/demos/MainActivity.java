@@ -1,43 +1,69 @@
 package com.ggg.demos;
 
-import android.app.Activity;
+import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.util.Log;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
-public class MainActivity extends Activity {
+public class MainActivity extends ListActivity {
+
+	private static final String[] demos = {"Spinner Demo"};
+
+	/**
+	 * Create intent and start activity of a given class
+	 * @param cls
+	 */
+	public void gotoActivity(Class<?> cls) {
+		if (cls != null) {
+			Intent intent = new Intent(this, cls);
+			startActivity(intent);
+		}
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		Intent intent = new Intent(this, SpinnerDemo.class);
-		startActivity(intent);
+		// populate list view
+		setListAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, demos));
 	}
 
+	/**
+	 * This method will be called when an item in the list is selected.
+	 * Subclasses should override. Subclasses can call
+	 * getListView().getItemAtPosition(position) if they need to access the
+	 * data associated with the selected item.
+	 *
+	 * @param l        The ListView where the click happened
+	 * @param v        The view that was clicked within the ListView
+	 * @param position The position of the view in the list
+	 * @param id       The row id of the item that was clicked
+	 */
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.menu_main, menu);
-		getMenuInflater().inflate(R.menu.menu_spinner_demo, menu);
-		return true;
-	}
+	protected void onListItemClick(ListView l, View v, int position, long id) {
+		super.onListItemClick(l, v, position, id);
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
+		Log.i("onListItemClick l", "" + l);
+		Log.i("onListItemClick v", "" + v);
+		Log.i("onListItemClick pos", "" + position);
+		Log.i("onListItemClick id", "" + id);
 
-		//noinspection SimplifiableIfStatement
-		if (id == R.id.action_settings) {
-			return true;
+		Class<?> targetCls = null;
+
+		switch (position) {
+			case 0:
+				targetCls = SpinnerDemo.class;
+				break;
 		}
 
-		return super.onOptionsItemSelected(item);
+		if (targetCls != null) {
+			this.gotoActivity(SpinnerDemo.class);
+		} else {
+			Log.i("onListItemClick", "cannot find mapped activity class");
+		}
 	}
-
 }
