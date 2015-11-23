@@ -26,12 +26,31 @@
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Demo Activities -->
         <activity
-            android:name=".SpinnerDemo"
-            android:label="@string/title_activity_spinner_demo"
+            android:name=".D001SpinnerView"
+            android:label="@string/demo_001_spinner_view"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ggg.demos.MainActivity" />
+        </activity>
+        <activity
+            android:name=".D002ListViewChoicemode"
+            android:label="@string/demo_002_list_view_choicemode"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ggg.demos.MainActivity" />
+        </activity>
+        <activity
+            android:name=".D003GridView"
+            android:label="@string/demo_003_grid_view"
             android:parentActivityName=".MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

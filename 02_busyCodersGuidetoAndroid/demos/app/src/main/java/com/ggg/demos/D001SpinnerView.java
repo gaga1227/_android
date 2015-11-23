@@ -5,10 +5,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 import android.widget.TextView;
 
-public class SpinnerDemo extends Activity implements AdapterView.OnItemSelectedListener {
+public class D001SpinnerView extends Activity implements AdapterView.OnItemSelectedListener {
 
 	private TextView selection;
 	private static final String[] items = {"lorem", "ipsum", "dolor"};
@@ -16,14 +15,17 @@ public class SpinnerDemo extends Activity implements AdapterView.OnItemSelectedL
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_spinner_demo);
+		setContentView(R.layout.demo_001_spinner_view);
 
 		// get views
 		selection = (TextView)findViewById(R.id.selection);
-		Spinner spin = (Spinner)findViewById(R.id.spinner);
+		android.widget.Spinner spin = (android.widget.Spinner)findViewById(R.id.spinner);
 
 		// link data to adaptor, then to spinner view
-		ArrayAdapter<String> aa = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
+		ArrayAdapter<String> aa = new ArrayAdapter<String>(
+				this,
+				android.R.layout.simple_spinner_item,
+				items);
 		aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spin.setAdapter(aa);
 

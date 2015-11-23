@@ -10,18 +10,12 @@ import android.widget.ListView;
 
 public class MainActivity extends ListActivity {
 
-	private static final String[] demos = {"Spinner Demo"};
-
-	/**
-	 * Create intent and start activity of a given class
-	 * @param cls
-	 */
-	public void gotoActivity(Class<?> cls) {
-		if (cls != null) {
-			Intent intent = new Intent(this, cls);
-			startActivity(intent);
-		}
-	}
+	// demos
+	private static final String[] demos = {
+			"001 SpinnerView",
+			"002 ListView Choicemode",
+			"003 GridView"
+	};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +23,10 @@ public class MainActivity extends ListActivity {
 		setContentView(R.layout.activity_main);
 
 		// populate list view
-		setListAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, demos));
+		setListAdapter(new ArrayAdapter<String>(
+				this,
+				android.R.layout.simple_list_item_1,
+				demos));
 	}
 
 	/**
@@ -52,18 +49,36 @@ public class MainActivity extends ListActivity {
 		Log.i("onListItemClick pos", "" + position);
 		Log.i("onListItemClick id", "" + id);
 
+		// find target class
 		Class<?> targetCls = null;
-
 		switch (position) {
 			case 0:
-				targetCls = SpinnerDemo.class;
+				targetCls = D001SpinnerView.class;
+				break;
+			case 1:
+				targetCls = D002ListViewChoicemode.class;
+				break;
+			case 2:
+				targetCls = D003GridView.class;
 				break;
 		}
 
+		// go to target activity if valid
 		if (targetCls != null) {
-			this.gotoActivity(SpinnerDemo.class);
+			this.gotoActivity(targetCls);
 		} else {
 			Log.i("onListItemClick", "cannot find mapped activity class");
+		}
+	}
+
+	/**
+	 * Create intent and start activity of a given class
+	 * @param cls
+	 */
+	public void gotoActivity(Class<?> cls) {
+		if (cls != null) {
+			Intent intent = new Intent(this, cls);
+			startActivity(intent);
 		}
 	}
 }
