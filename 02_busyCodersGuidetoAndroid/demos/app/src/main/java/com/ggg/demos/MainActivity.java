@@ -14,7 +14,8 @@ public class MainActivity extends ListActivity {
 	private static final String[] demos = {
 			"001 SpinnerView",
 			"002 ListView Choicemode",
-			"003 GridView"
+			"003 GridView",
+			"004 AutoCompleteTextView"
 	};
 
 	@Override
@@ -60,6 +61,9 @@ public class MainActivity extends ListActivity {
 				break;
 			case 2:
 				targetCls = D003GridView.class;
+				break;
+			case 3:
+				targetCls = D004AutoCompleteTextView.class;
 				break;
 		}
 

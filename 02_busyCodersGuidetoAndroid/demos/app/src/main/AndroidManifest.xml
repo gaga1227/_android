@@ -56,6 +56,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.ggg.demos.MainActivity" />
         </activity>
+        <activity
+            android:name=".D004AutoCompleteTextView"
+            android:label="@string/demo_004_auto_complete_text_view"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ggg.demos.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

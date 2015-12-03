@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
@@ -24,7 +23,7 @@ public class D003GridView extends Activity implements AdapterView.OnItemClickLis
 
 	private TextView selection;
 	private GridView grid;
-	private int gridSize;
+	private int gridCount;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -71,8 +70,8 @@ public class D003GridView extends Activity implements AdapterView.OnItemClickLis
 		// highlight view
 		if (view != null) {
 			// update all children cell views
-			gridSize = grid.getChildCount();
-			for (int i = 0; i < gridSize; i++) {
+			gridCount = grid.getChildCount();
+			for (int i = 0; i < gridCount; i++) {
 				TextView cellView = (TextView) grid.getChildAt(i);
 				if (cellView == view) {
 					cellView.setBackgroundColor(Color.parseColor("#ff99ff"));
