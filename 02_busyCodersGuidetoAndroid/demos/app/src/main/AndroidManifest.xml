@@ -64,6 +64,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.ggg.demos.MainActivity" />
         </activity>
+        <activity
+            android:name=".D005ListViewCustomRow"
+            android:label="@string/demo_005_list_view_custom_row"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ggg.demos.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

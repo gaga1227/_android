@@ -15,7 +15,8 @@ public class MainActivity extends ListActivity {
 			"001 SpinnerView",
 			"002 ListView Choicemode",
 			"003 GridView",
-			"004 AutoCompleteTextView"
+			"004 AutoCompleteTextView",
+			"005 ListView Custom Row"
 	};
 
 	@Override
@@ -64,6 +65,9 @@ public class MainActivity extends ListActivity {
 				break;
 			case 3:
 				targetCls = D004AutoCompleteTextView.class;
+				break;
+			case 4:
+				targetCls = D005ListViewCustomRow.class;
 				break;
 		}
 
