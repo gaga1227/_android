@@ -1,11 +1,13 @@
 package com.ggg.hour2application;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,49 +20,95 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        /**
+         * Launch secondary activity using explicit intent with data
+         */
+
         // define button and register click callback
         Button activityButton = (Button) findViewById(R.id.button);
         activityButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // create new explicit intent
                 Intent startIntent = new Intent(getApplicationContext(), SecondaryActivity.class);
+
+                // add data and start intent
+                startIntent.putExtra("MESSAGE_KEY", "Great, you got my message!");
                 startActivity(startIntent);
             }
         });
 
 
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
+        /**
+         * Open map location with implicit intent
+         */
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
-    }
+        Button mapButton = (Button) findViewById(R.id.button2);
+        mapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // prepare geo URI data
+                String geoString = "geo:37.422,-122.084?z=18";
+                Uri geoURI = Uri.parse(geoString);
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
+                // create intent with URI data
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, geoURI);
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+                // start intent if there is device app to handle such intent
+                if (mapIntent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(mapIntent);
+                }
+            }
+        });
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
 
-        return super.onOptionsItemSelected(item);
+        /**
+         * Displaying a Web Page
+         */
+
+        Button webButton = (Button) findViewById(R.id.button3);
+        webButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // prepare web URI data
+                String webString = "http://gaga-graphics.com";
+                Uri webURI = Uri.parse(webString);
+
+                // create intent with URI data
+                Intent webIntent = new Intent(Intent.ACTION_VIEW, webURI);
+
+                // start intent if there is device app to handle such intent
+                if (webIntent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(webIntent);
+                }
+            }
+        });
+
+
+        /**
+         * Make a call
+         */
+
+        Button callButton = (Button) findViewById(R.id.button4);
+        callButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // prepare dial URI data
+                String dialString = "tel:0421123456";
+                Uri dialURI = Uri.parse(dialString);
+
+                // create intent with URI data
+                Intent dialIntent = new Intent(Intent.ACTION_DIAL);
+                // alternative way to add intent data
+                dialIntent.setData(dialURI);
+
+                // start intent if there is device app to handle such intent
+                if (dialIntent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(dialIntent);
+                }
+            }
+        });
+
     }
 }
