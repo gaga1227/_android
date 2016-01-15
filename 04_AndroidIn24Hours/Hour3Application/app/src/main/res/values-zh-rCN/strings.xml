@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">第三节程序</string>
+    <string name="textview_1">这是字幕1</string>
+    <string name="textview_2">这是字幕2</string>
+</resources>

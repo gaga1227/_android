@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Hour3Application</string>
+    <string name="textview_1">This is text view 1</string>
+    <string name="textview_2">This is text view 2</string>
+</resources>
