@@ -1,3 +1,6 @@
+# OSX
+.DS_Store
+
 # Built application files
 *.apk
 *.ap_
@@ -30,3 +33,4 @@ proguard/
 # IntelliJ IDEA
 **/.idea/workspace.xml
 **/.idea/tasks.xml
+*.iws
