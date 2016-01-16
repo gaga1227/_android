@@ -1,6 +1,7 @@
 package com.ggg.sbtdemos;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.nfc.NdefMessage;
 import android.nfc.NfcAdapter;
 import android.os.Parcelable;
@@ -40,7 +41,18 @@ public class NFC extends AppCompatActivity {
 
         //process the msgs array
         if (msgsList.size() > 0) {
-            Log.i("INFO", "onCreate: ACTION_NDEF_DISCOVERED and EXTRA_NDEF_MESSAGES found!");
+            // get url string from first NDEF record
+            String deepLinkUrl = msgsList.get(0).getRecords()[0].toUri().toString();
+
+            // start intent with deep link url data
+            if (deepLinkUrl != null && deepLinkUrl.length() > 0) {
+                Log.i("INFO", "onCreate: ACTION_NDEF_DISCOVERED and EXTRA_NDEF_MESSAGES found!");
+                Log.i("INFO", deepLinkUrl);
+
+                Intent deepLinkIntent = new Intent(getApplicationContext(), MainActivity.class);
+                deepLinkIntent.putExtra("SBT_DEEPLINK", deepLinkUrl);
+                startActivity(deepLinkIntent);
+            }
         }
         else {
             Log.i("INFO", "onCreate: No ACTION_NDEF_DISCOVERED or EXTRA_NDEF_MESSAGES found!");
