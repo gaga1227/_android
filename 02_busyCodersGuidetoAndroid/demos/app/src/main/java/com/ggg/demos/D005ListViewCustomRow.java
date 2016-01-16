@@ -29,6 +29,15 @@ public class D005ListViewCustomRow extends ListActivity {
 	}
 
 	/**
+	 * Get list data item at a position and return data value
+	 * @param position - data item position in the list
+	 * @return - list item data
+	 */
+	private String getItemModel(int position) {
+		return ((IconicAdapter) getListAdapter()).getItem(position);
+	}
+
+	/**
 	 * Inner class for custom adaptor
 	 */
 	class IconicAdapter extends ArrayAdapter<String> {
@@ -50,16 +59,23 @@ public class D005ListViewCustomRow extends ListActivity {
 			// with given params using super method
 			View row = super.getView(position, convertView, parent);
 
-			// customise view
-			int labelLength = items[position].length();
+			// try reuse a row using view holder pattern
+			D005ListViewCustomRowViewHolder viewholder =
+					(D005ListViewCustomRowViewHolder) row.getTag();
 
-			ImageView icon = (ImageView) row.findViewById(R.id.icon);
-			TextView size = (TextView) row.findViewById(R.id.size);
+			// if current row has no view holder defined via 'getTag'
+			// create a new one and assign it to row view via 'setTag'
+			if (viewholder == null) {
+				viewholder = new D005ListViewCustomRowViewHolder(row);
+				row.setTag(viewholder);
+			}
 
-			icon.setImageResource(labelLength > 4 ? R.mipmap.delete : R.mipmap.ok);
-			size.setText(String.format(getString(R.string.size_template), labelLength));
+			// customise view based on model data length
+			int labelLength = getItemModel(position).length();
+			viewholder.icon.setImageResource(labelLength > 4 ? R.mipmap.delete : R.mipmap.ok);
+			viewholder.size.setText(String.format(getString(R.string.size_template), labelLength));
 
-			// finally return customised row view
+			// finally return customised row view for display
 			return row;
 		}
 	}
