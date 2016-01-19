@@ -1,6 +1,12 @@
 package com.ggg.hour5application;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.os.SystemClock;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.AppCompatActivity;
@@ -23,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     Button uiThreadButton;
     Button workerThreadButton;
     Button asyncTaskButton;
+    Button intentServiceButton;
 
     /**
      * onCreate
@@ -50,6 +57,10 @@ public class MainActivity extends AppCompatActivity {
         // init async thread button
         asyncTaskButton = (Button) findViewById(R.id.asyncTaskButton);
         asyncTaskButton.setOnClickListener(asyncButtonListener);
+
+        // init intent service button
+        intentServiceButton = (Button) findViewById(R.id.intentServiceButton);
+        intentServiceButton.setOnClickListener(intentServiceButtonListener);
     }
 
 
@@ -60,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
     private void updateTextView(String input) {
         if (resultsTextView != null && input != null && input.length() > 0) {
             resultsTextView.setText(input);
-            Log.i("INFO", "Text view updated after delay!");
+            Log.i("INFO", input);
         } else {
             Log.i("INFO", "Invalid view or input!");
         }
@@ -73,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
     View.OnClickListener uiButtonListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            updateTextView("Start delay in main thread...");
             SystemClock.sleep(delay);
             updateTextView("Delayed and Updated on UI Thread (Blocking)");
         }
@@ -86,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             loader.show();
+            updateTextView("Start delay in worker thread...");
 
             new Thread(new Runnable() {
                 @Override
@@ -102,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
             }).start();
         }
     };
+
 
     /**
      * Async Thread delay
@@ -149,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             loader.show();
-            updateTextView("Start async task for delay...");
+            updateTextView("Start delay in async task...");
         }
 
         /**
@@ -173,5 +187,95 @@ public class MainActivity extends AppCompatActivity {
                 updateTextView("Delayed on Async Thread (Non-Blocking)");
             }
         }
+    }
+
+
+    /**
+     * Intent Service delay
+     */
+
+    View.OnClickListener intentServiceButtonListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            loader.show();
+            updateTextView("Start delay from intent service...");
+
+            // create and start delay service intent
+            Intent delayIntent = new Intent(getApplicationContext(), DelayService.class);
+            startService(delayIntent);
+        }
+    };
+
+    // inner class for broadcast intent receiver
+    class DelayReceiver extends BroadcastReceiver {
+
+        /**
+         * This method is called when the BroadcastReceiver is receiving an Intent
+         * broadcast.  During this time you can use the other methods on
+         * BroadcastReceiver to view/modify the current result values.  This method
+         * is always called within the main thread of its process, unless you
+         * explicitly asked for it to be scheduled on a different thread using
+         * {@link Context#registerReceiver(BroadcastReceiver,
+         * IntentFilter, String, Handler)}. When it runs on the main
+         * thread you should
+         * never perform long-running operations in it (there is a timeout of
+         * 10 seconds that the system allows before considering the receiver to
+         * be blocked and a candidate to be killed). You cannot launch a popup dialog
+         * in your implementation of onReceive().
+         *
+         * <p><b>If this BroadcastReceiver was launched through a &lt;receiver&gt; tag,
+         * then the object is no longer alive after returning from this
+         * function.</b>  This means you should not perform any operations that
+         * return a result to you asynchronously -- in particular, for interacting
+         * with services, you should use
+         * {@link Context#startService(Intent)} instead of
+         * {@link Context#bindService(Intent, ServiceConnection, int)}.  If you wish
+         * to interact with a service that is already running, you can use
+         * {@link #peekService}.
+         *
+         * <p>The Intent filters used in {@link Context#registerReceiver}
+         * and in application manifests are <em>not</em> guaranteed to be exclusive. They
+         * are hints to the operating system about how to find suitable recipients. It is
+         * possible for senders to force delivery to specific recipients, bypassing filter
+         * resolution.  For this reason, {@link #onReceive(Context, Intent) onReceive()}
+         * implementations should respond only to known actions, ignoring any unexpected
+         * Intents that they may receive.
+         *
+         * @param context The Context in which the receiver is running.
+         * @param intent  The Intent being received.
+         */
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // get received intent action and bundle
+            String intentAction = intent.getAction();
+            Bundle intentExtras = intent.getExtras();
+
+            // update text view when received qualified broadcast intent
+            if (intentAction == DelayService.ACTION_DELAY) {
+                if (intentExtras.getString(DelayService.EXTRA_MESSAGE) != null) {
+                    loader.hide();
+                    updateTextView("Delayed on intent service (Non-Blocking)");
+                }
+            }
+        }
+    }
+
+    // create broadcast receiver
+    DelayReceiver delayReceiver = new DelayReceiver();
+
+    // start/stop broadcast receiver with activity lifecycle
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // start receiver and listening with intent filter
+        registerReceiver(delayReceiver, new IntentFilter(DelayService.ACTION_DELAY));
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        // stop receiver and listening
+        unregisterReceiver(delayReceiver);
     }
 }
