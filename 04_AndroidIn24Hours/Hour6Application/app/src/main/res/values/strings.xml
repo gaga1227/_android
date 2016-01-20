@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Hour 6 Application</string>
+    <string name="name_input_hint">Name</string>
+    <string name="pass_input_hint">Password</string>
+</resources>
