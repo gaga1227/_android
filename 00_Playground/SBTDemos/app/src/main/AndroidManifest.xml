@@ -25,11 +25,24 @@
         <!-- NFC -->
         <activity android:name=".NFC">
             <intent-filter>
-                <action android:name="android.nfc.action.NDEF_DISCOVERED"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <data android:scheme="https"
-                    android:host="m.sportsbet.com.au" />
+                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data
+                    android:host="m.sportsbet.com.au"
+                    android:scheme="https" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data
+                    android:host="invis.io"
+                    android:scheme="https" />
+            </intent-filter>
+        </activity>
+
+        <!-- WEBVIEW -->
+        <activity android:name=".WebViewActivity">
+
         </activity>
     </application>
 
