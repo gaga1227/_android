@@ -1,15 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="0dp"
+    android:padding="16dp"
+    android:background="#00549e"
+    android:gravity="center_horizontal"
     tools:context="com.ggg.sbtdemos.MainActivity">
 
-    <WebView
+    <ImageView
+        android:layout_marginTop="80dp"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:src="@mipmap/ic_launcher"/>
+
+    <TextView
+        android:layout_marginTop="60dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/webView"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
-</RelativeLayout>
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:textSize="36sp"
+        android:textColor="#febc11"
+        android:text="NFC Hack Demo"/>
+
+    <TextView
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:textSize="22sp"
+        android:textColor="#febc11"
+        android:text="Mobile App Deep Linking"/>
+
+    <TextView
+        android:layout_marginTop="60dp"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:textColor="#ffffff"
+        android:lineSpacingExtra="5dp"
+        android:text="Touch on your preprogrammed NFC SmartTag..."/>
+
+</LinearLayout>
