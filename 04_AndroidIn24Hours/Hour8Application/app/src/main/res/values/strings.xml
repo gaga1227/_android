@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">Hour8Application</string>
+
+    <string-array name="pie_array">
+        <item>apple</item>
+        <item>blueberry</item>
+        <item>cherry</item>
+        <item>coconut cream</item>
+        <item>apple</item>
+        <item>blueberry</item>
+        <item>cherry</item>
+        <item>coconut cream</item>
+        <item>apple</item>
+        <item>blueberry</item>
+        <item>cherry</item>
+        <item>coconut cream</item>
+        <item>apple</item>
+        <item>blueberry</item>
+        <item>cherry</item>
+        <item>coconut cream</item>
+        <item>apple</item>
+        <item>blueberry</item>
+        <item>cherry</item>
+        <item>coconut cream</item>
+        <item>apple</item>
+        <item>blueberry</item>
+        <item>cherry</item>
+        <item>coconut cream</item>
+        <item>apple</item>
+        <item>blueberry</item>
+        <item>cherry</item>
+        <item>coconut cream</item>
+    </string-array>
+</resources>
