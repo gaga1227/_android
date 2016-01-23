@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.text.NumberFormat;
@@ -93,25 +92,41 @@ public class ItemAdaptor extends BaseAdapter{
      */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        // TODO: refactor to use convertView in a view holder pattern
+        // create view holder instance
+        ViewHolder viewHolder;
 
-        // create textView from resource file
-        RelativeLayout viewGroup = (RelativeLayout) mInflater.inflate(R.layout.view_item, null);
+        // if is not reusing existing recycled view
+        if (convertView == null) {
+            // create brand new view from resource file
+            convertView = mInflater.inflate(R.layout.view_item, null);
+
+            // create view holder object to hold text view refs
+            viewHolder = new ViewHolder();
+
+            // find textViews and add refs into view holder
+            viewHolder.textViewName = (TextView) convertView.findViewById(R.id.textViewName);
+            viewHolder.textViewPrice = (TextView) convertView.findViewById(R.id.textViewPrice);
+            viewHolder.textViewDesc = (TextView) convertView.findViewById(R.id.textViewDescription);
+
+            // attach view holder object onto view
+            convertView.setTag(viewHolder);
+        }
+        // if is reusing existing recycled view
+        else {
+            viewHolder = (ViewHolder) convertView.getTag();
+        }
 
         // get current item and content formatter
         Item currentItem = (Item) this.getItem(position);
         NumberFormat formatter = NumberFormat.getCurrencyInstance();
 
-        // find and update textViews
-        TextView name = (TextView) viewGroup.findViewById(R.id.textViewName);
-        TextView price = (TextView) viewGroup.findViewById(R.id.textViewPrice);
-        TextView desc = (TextView) viewGroup.findViewById(R.id.textViewDescription);
-
-        name.setText(currentItem.mName);
-        desc.setText(currentItem.mDescription);
-        price.setText(formatter.format(currentItem.mPrice));
+        // use refs from view holder to populate recycled view
+        // instead of always creating new ones
+        viewHolder.textViewName.setText(currentItem.mName);
+        viewHolder.textViewDesc.setText(currentItem.mDescription);
+        viewHolder.textViewPrice.setText(formatter.format(currentItem.mPrice));
 
         //return group
-        return viewGroup;
+        return convertView;
     }
 }
