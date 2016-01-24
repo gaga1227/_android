@@ -1,5 +1,6 @@
 package com.ggg.hour9application;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,20 +11,22 @@ import android.widget.Toast;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 
-public class ItemAdaptor extends RecyclerView.Adapter<ViewHolder>{
+public class ItemAdaptor extends RecyclerView.Adapter<ViewHolder> {
 
     /**
      * vars
      */
     ArrayList<Item> mItems;
+    Context mContext;
 
 
     /**
      * Constructor
      */
-    public ItemAdaptor(ArrayList<Item> items) {
+    public ItemAdaptor(ArrayList<Item> items, Context context) {
         // pass data from activity to adaptor
         mItems = items;
+        mContext = context;
     }
 
 
@@ -81,6 +84,14 @@ public class ItemAdaptor extends RecyclerView.Adapter<ViewHolder>{
         viewHolder.textViewName.setText(currentItem.mName);
         viewHolder.textViewDesc.setText(currentItem.mDescription);
         viewHolder.textViewPrice.setText(formatter.format(currentItem.mPrice));
+
+        // add click handler
+        viewHolder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(mContext, currentItem.mName, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 

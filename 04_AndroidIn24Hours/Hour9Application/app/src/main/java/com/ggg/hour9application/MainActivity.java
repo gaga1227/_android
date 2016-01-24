@@ -43,7 +43,7 @@ public class MainActivity extends Activity {
         recyclerView.setLayoutManager(itemLayoutManager);
 
         // set up adaptor and set to recycler view
-        ItemAdaptor customAdaptor = new ItemAdaptor(listItems);
+        ItemAdaptor customAdaptor = new ItemAdaptor(listItems, this);
         recyclerView.setAdapter(customAdaptor);
     }
 

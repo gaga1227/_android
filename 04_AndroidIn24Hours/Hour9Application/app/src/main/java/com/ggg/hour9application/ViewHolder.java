@@ -11,6 +11,7 @@ public class ViewHolder extends RecyclerView.ViewHolder {
      * members
      */
 
+    public CardView cardView;
     public TextView textViewName;
     public TextView textViewPrice;
     public TextView textViewDesc;
@@ -23,6 +24,7 @@ public class ViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
 
         // find child views
+        cardView = (CardView) itemView.findViewById(R.id.cardView);
         textViewName = (TextView) itemView.findViewById(R.id.textViewName);
         textViewPrice = (TextView) itemView.findViewById(R.id.textViewPrice);
         textViewDesc = (TextView) itemView.findViewById(R.id.textViewDescription);
