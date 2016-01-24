@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="textColor">#607d8b</color>
+    <color name="textColorPrimary">#ffffff</color>
+    <color name="colorAccent">#ffeb3b</color>
+    <color name="statusBarColor">#c2185b</color>
+    <color name="actionBarColor">#e91e63</color>
+    <color name="navigationBarColor">#a8a8a8</color>
+    <color name="windowBackground">#e8e8e8</color>
+
+    <color name="titleColor">#e91e63</color>
+    <color name="titleColorAlt">#009688</color>
+</resources>

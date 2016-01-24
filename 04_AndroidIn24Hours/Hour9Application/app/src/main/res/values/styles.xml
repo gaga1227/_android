@@ -1,0 +1,21 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="android:Theme.Material">
+        <!-- Customize your theme here. -->
+        <item name="android:textColor">@color/textColor</item>
+        <item name="android:statusBarColor">@color/statusBarColor</item>
+        <item name="android:windowBackground">@color/windowBackground</item>
+        <item name="android:navigationBarColor">@color/navigationBarColor</item>
+        <item name="android:textColorPrimary">@color/textColorPrimary</item>
+        <item name="android:actionBarStyle">@style/actionBarStyle</item>
+    </style>
+
+    <!-- Action bar theme -->
+    <style name="actionBarStyle" parent="android:Theme.Material.Light.DarkActionBar">
+        <!-- So things will show up after set new style -->
+        <item name="android:displayOptions">showTitle</item>
+        <item name="android:background">@color/actionBarColor</item>
+    </style>
+
+</resources>
