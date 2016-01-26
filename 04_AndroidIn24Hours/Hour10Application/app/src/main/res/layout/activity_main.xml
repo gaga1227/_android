@@ -18,9 +18,12 @@
 
         <!-- SPINNER -->
         <include layout="@layout/spinner"/>
-
         <!-- AUTO COMPLETE TEXT VIEW -->
         <include layout="@layout/auto_complete_text_view"/>
+        <!-- CHECKBOX -->
+        <include layout="@layout/checkbox"/>
+        <!-- RADIO BUTTON -->
+        <include layout="@layout/radiobutton"/>
 
     </LinearLayout>
 </ScrollView>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/CardTheme">
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+        <!-- TITLE -->
+        <TextView style="@style/TitleTheme" android:text="Radio Button Group"/>
+
+        <!-- VIEW -->
+        <RadioGroup
+                android:id="@+id/radioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/view_gutter"
+                android:orientation="horizontal">
+            <RadioButton
+                    android:id="@+id/radioButton1"
+                    android:text="Radio 1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/view_gutter"
+                    android:checked="true"/>
+            <RadioButton
+                    android:id="@+id/radioButton2"
+                    android:text="Radio 2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/view_gutter"
+                    android:checked="false"/>
+            <RadioButton
+                    android:id="@+id/radioButton3"
+                    android:text="Radio 3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/view_gutter"
+                    android:checked="false"
+                    android:enabled="false"/>
+        </RadioGroup>
+
+    </LinearLayout>
+</android.support.v7.widget.CardView>

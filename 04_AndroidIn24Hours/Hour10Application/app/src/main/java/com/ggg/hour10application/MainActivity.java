@@ -10,6 +10,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.CheckBox;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -36,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         // init demos
         initSpinner();
         initAutoCompleteTextView();
+        initRadioGroup();
     }
 
 
@@ -69,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 makeToast("Spinner:\n" + items[position]);
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
@@ -95,14 +100,47 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
+
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
             }
+
             @Override
             public void afterTextChanged(Editable s) {
                 makeToast("AutoCompleteTextView:\n" + s.toString());
             }
         });
     }
+
+
+    /**
+     * Checkbox
+     */
+    public void onCheckboxSelected(View view) {
+        if (view != null) {
+            CheckBox v = (CheckBox) view;
+            Boolean checked = v.isChecked();
+            v.setText(checked ? "Checked" : "Unchecked");
+        }
+    }
+
+
+    /**
+     * RadioGroup
+     */
+    public void initRadioGroup() {
+        // find view
+        RadioGroup v = (RadioGroup) findViewById(R.id.radioGroup);
+
+        // handle selection
+        v.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                RadioButton radioButton = (RadioButton) findViewById(checkedId);
+                makeToast("Radio Button Selected:\n" + radioButton.getText());
+            }
+        });
+    }
+
 }
 
