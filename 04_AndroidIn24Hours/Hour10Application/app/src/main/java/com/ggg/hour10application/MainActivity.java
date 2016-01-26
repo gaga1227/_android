@@ -7,9 +7,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.AdapterView;
+import android.widget.AdapterViewFlipper;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -47,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         initRadioGroup();
         initProgressBar();
         initGridView();
+        initAdapterViewFlipper();
     }
 
 
@@ -271,6 +274,25 @@ public class MainActivity extends AppCompatActivity {
                 makeToast("GridView:\n" + items[position]);
             }
         });
+    }
+
+
+    /**
+     * AdapterViewFlipper
+     */
+    public void initAdapterViewFlipper() {
+        // find view
+        AdapterViewFlipper v = (AdapterViewFlipper) findViewById(R.id.viewFlipper);
+
+        // set data adaptor to view
+        v.setAdapter(new ArrayAdapter<String>(
+                this,
+                R.layout.adaptor_item,
+                items));
+
+        // setup flipper view
+        v.setFlipInterval(2000);
+        v.setAutoStart(true);
     }
 }
 

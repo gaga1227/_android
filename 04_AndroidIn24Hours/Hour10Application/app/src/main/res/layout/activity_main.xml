@@ -28,6 +28,8 @@
         <include layout="@layout/progressbar"/>
         <!-- GRID VIEW -->
         <include layout="@layout/grid_view"/>
+        <!-- ADAPTOR VIEW FLIPPER -->
+        <include layout="@layout/adaptor_view_flipper"/>
 
     </LinearLayout>
 </ScrollView>
