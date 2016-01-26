@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Hour10: View Demos</string>
+    <string-array name="items">
+        <item>Apple</item>
+        <item>Blueberry</item>
+        <item>Cherry</item>
+        <item>Coconut Cream</item>
+        <item>Watermelon</item>
+    </string-array>
+</resources>
