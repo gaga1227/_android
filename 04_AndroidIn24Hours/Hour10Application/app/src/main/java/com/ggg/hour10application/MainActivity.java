@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.GridView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         initAutoCompleteTextView();
         initRadioGroup();
         initProgressBar();
+        initGridView();
     }
 
 
@@ -151,7 +153,6 @@ public class MainActivity extends AppCompatActivity {
     /**
      * ProgressBar
      */
-
     public void initProgressBar() {
         //find views
         final Button btn = (Button) findViewById(R.id.taskButton);
@@ -245,6 +246,29 @@ public class MainActivity extends AppCompatActivity {
                 // start async task
                 Task task = new Task();
                 task.execute();
+            }
+        });
+    }
+
+
+    /**
+     * GridView
+     */
+    public void initGridView() {
+        // find view
+        GridView v = (GridView) findViewById(R.id.gridView);
+
+        // set data adaptor to view
+        v.setAdapter(new ArrayAdapter<String>(
+                this,
+                R.layout.adaptor_item,
+                items));
+
+        // handle item selection
+        v.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                makeToast("GridView:\n" + items[position]);
             }
         });
     }

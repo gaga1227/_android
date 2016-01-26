@@ -26,6 +26,8 @@
         <include layout="@layout/radiobutton"/>
         <!-- PROGRESS BAR -->
         <include layout="@layout/progressbar"/>
+        <!-- GRID VIEW -->
+        <include layout="@layout/grid_view"/>
 
     </LinearLayout>
 </ScrollView>
