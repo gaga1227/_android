@@ -1,16 +1,20 @@
 package com.ggg.hour10application;
 
+import android.animation.ObjectAnimator;
+import android.os.AsyncTask;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -40,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         initSpinner();
         initAutoCompleteTextView();
         initRadioGroup();
+        initProgressBar();
     }
 
 
@@ -142,5 +147,106 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
+    /**
+     * ProgressBar
+     */
+
+    public void initProgressBar() {
+        //find views
+        final Button btn = (Button) findViewById(R.id.taskButton);
+        final ProgressBar progressBar = (ProgressBar) findViewById(R.id.horizontalProgressBar);
+        final ProgressBar progressSpinner = (ProgressBar) findViewById(R.id.progressBar);
+
+        // progress steps
+        final int steps = 5;
+        final int maxProgress = 1000;
+
+        // AsyncTask inner class to simulate background progress
+        class Task extends AsyncTask<Integer, Integer, Integer> {
+            /**
+             * Runs on the UI thread before {@link #doInBackground}.
+             */
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+
+                // update button view
+                btn.setText("In Progress...");
+                btn.setEnabled(false);
+
+                // make sure progress bars are shown and reset
+                progressBar.setProgress(0);
+                progressBar.setMax(maxProgress);
+                progressBar.setVisibility(View.VISIBLE);
+                progressSpinner.setVisibility(View.VISIBLE);
+            }
+
+            /**
+             * <p>Runs on the UI thread after {@link #doInBackground}. The
+             * specified result is the value returned by {@link #doInBackground}.</p>
+             */
+            @Override
+            protected void onPostExecute(Integer integer) {
+                super.onPostExecute(integer);
+
+                // reset button view
+                btn.setText("Start Progress");
+                btn.setEnabled(true);
+
+                // hide progress spinner
+                progressSpinner.setVisibility(View.INVISIBLE);
+            }
+
+            /**
+             * Runs on the UI thread after {@link #publishProgress} is invoked.
+             * The specified values are the values passed to {@link #publishProgress}.
+             */
+            @Override
+            protected void onProgressUpdate(Integer... values) {
+                super.onProgressUpdate(values);
+
+                // update progress bar with animation
+                ObjectAnimator animation = ObjectAnimator.ofInt(
+                        progressBar,
+                        "progress",
+                        values[0]);
+                animation.setDuration(500);
+                animation.setInterpolator(new DecelerateInterpolator());
+                animation.start();
+            }
+
+            /**
+             * Override this method to perform a computation on a background thread. The
+             * specified parameters are the parameters passed to {@link #execute}
+             * by the caller of this task.
+             *
+             * This method can call {@link #publishProgress} to publish updates
+             * on the UI thread.
+             */
+            @Override
+            protected Integer doInBackground(Integer... params) {
+                // delay in steps
+                for (int i = 1; i <= steps; i++) {
+                    SystemClock.sleep(1000);
+                    // publish progress on each step
+                    publishProgress(i * (maxProgress / steps));
+                }
+
+                // return result (any integer)
+                return 0;
+            }
+        }
+
+        // button handler
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // start async task
+                Task task = new Task();
+                task.execute();
+            }
+        });
+    }
 }
 

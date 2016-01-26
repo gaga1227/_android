@@ -24,6 +24,8 @@
         <include layout="@layout/checkbox"/>
         <!-- RADIO BUTTON -->
         <include layout="@layout/radiobutton"/>
+        <!-- PROGRESS BAR -->
+        <include layout="@layout/progressbar"/>
 
     </LinearLayout>
 </ScrollView>
