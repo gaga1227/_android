@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"
+            tools:context="com.ggg.hour11application.MainActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:gravity="center">
+
+        <!-- SCALE TYPE -->
+        <TextView
+            android:id="@+id/textScaleType"
+            style="@style/TitleTheme"
+            android:text="Scale Type" />
+        <ImageView
+            android:id="@+id/imageScaleType"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:contentDescription="Scale Type Image"
+            android:background="@color/colorAccent"
+            android:src="@drawable/img_test"
+            android:onClick="onImageScaleTypeClick"/>
+
+        <!-- ROTATION -->
+        <TextView
+            android:id="@+id/textRotation"
+            style="@style/TitleTheme"
+            android:text="Rotation" />
+        <ImageView
+            android:id="@+id/imageRotation"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:contentDescription="Rotation Image"
+            android:src="@drawable/img_test"
+            android:onClick="onImageRotationClick"/>
+
+        <!-- ALPHA -->
+        <TextView
+            android:id="@+id/textAlpha"
+            style="@style/TitleTheme"
+            android:text="Alpha" />
+        <ImageView
+            android:id="@+id/imageAlpha"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:contentDescription="Alpha Image"
+            android:src="@drawable/img_test" />
+        <SeekBar
+            android:id="@+id/seekAlpha"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="100"
+            android:progress="100"/>
+
+    </LinearLayout>
+</ScrollView>
+
