@@ -1,5 +1,6 @@
 package com.ggg.hour13applicationactionbar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -46,12 +47,17 @@ public class MainActivity extends AppCompatActivity {
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // get selected menu item id
+        // get selected menu item info
         int itemId = item.getItemId();
+        String itemTitle = item.getTitle().toString();
 
-        // handle menu item selection here if item id can be found
-        if (itemId == R.id.action_settings) {
-            Toast.makeText(MainActivity.this, "settings", Toast.LENGTH_SHORT).show();
+        // handle menu item selection here
+        if (item != null) {
+            Toast.makeText(MainActivity.this, itemTitle, Toast.LENGTH_SHORT).show();
+
+            Intent childIntent = new Intent(MainActivity.this, ChildActivity.class);
+            childIntent.putExtra("CHILD_CONTENT_TITLE", itemTitle);
+            startActivity(childIntent);
 
             //return true to handle selection action here rather than pass it up the chain
             return true;
