@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.ggg.hour13applicationactionbar">
+          package="com.ggg.hour13applicationtoolbar">
 
     <application
             android:allowBackup="true"
@@ -11,7 +11,9 @@
 
         <!-- MAIN -->
         <activity
-                android:name=".MainActivity">
+                android:name="com.ggg.hour13applicationtoolbar.MainActivity"
+                android:label="@string/title_activity_main"
+                android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -20,9 +22,10 @@
 
         <!-- CHILD -->
         <activity
-                android:name=".ChildActivity"
-                android:parentActivityName=".MainActivity">
+                android:name="com.ggg.hour13applicationtoolbar.ChildActivity"
+                android:parentActivityName="com.ggg.hour13applicationtoolbar.MainActivity">
         </activity>
+
     </application>
 
 </manifest>

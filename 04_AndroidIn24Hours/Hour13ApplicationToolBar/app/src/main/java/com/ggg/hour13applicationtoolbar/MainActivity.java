@@ -1,9 +1,9 @@
-package com.ggg.hour13applicationactionbar;
+package com.ggg.hour13applicationtoolbar;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -12,52 +12,38 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * onCreate
+     * @param savedInstanceState
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // setup action bar contents
-        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
-        try {
-            // set titles
-            actionBar.setTitle(R.string.title_activity_main);
-            actionBar.setSubtitle(R.string.subtitle_activity_main);
-            // set icon
-            actionBar.setDisplayShowHomeEnabled(true);
-            actionBar.setIcon(R.mipmap.ic_launcher);
-        }
-        catch (NullPointerException exp) {
-            Log.e("Error", exp.getMessage());
-        }
+        // find toolbar view and init
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
     }
 
 
     /**
      * onCreateOptionsMenu
-     * @param menu The options menu in which you place your items.
-     * @return You must return true for the menu to be displayed;
+     * @param menu
+     * @return
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // inflate menu resource with menu options
-        // and display it
-        if (menu != null) {
-            getMenuInflater().inflate(R.menu.menu_main, menu);
-            // return true to display menu
-            return true;
-        }
+        // inflate menu resource into view
+        getMenuInflater().inflate(R.menu.menu_main, menu);
 
-        // return default: false
-        return super.onCreateOptionsMenu(menu);
+        // must return true to be displayed
+        return true;
     }
 
 
     /**
      * onOptionsItemSelected
-     * @param item The menu item that was selected.
-     * @return boolean Return false to allow normal menu processing to
+     * @param item
+     * @return
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
