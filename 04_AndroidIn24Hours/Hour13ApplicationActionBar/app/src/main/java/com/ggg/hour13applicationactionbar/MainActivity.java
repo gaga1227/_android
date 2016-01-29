@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
             // set titles
             actionBar.setTitle(R.string.title_activity_main);
             actionBar.setSubtitle(R.string.subtitle_activity_main);
-            // set icon
+            // set home icon and show
             actionBar.setDisplayShowHomeEnabled(true);
             actionBar.setIcon(R.mipmap.ic_launcher);
         }

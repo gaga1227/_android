@@ -7,4 +7,11 @@
     <string name="action_help">Help</string>
     <string name="action_contact">Contact</string>
     <string name="action_extra">Extra</string>
+
+    <!-- FILTERS -->
+    <string-array name="filters">
+        <item>Yesterday</item>
+        <item>Today</item>
+        <item>Tomorrow</item>
+    </string-array>
 </resources>

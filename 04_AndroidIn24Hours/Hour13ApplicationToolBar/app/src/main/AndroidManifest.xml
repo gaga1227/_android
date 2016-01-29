@@ -23,7 +23,8 @@
         <!-- CHILD -->
         <activity
                 android:name="com.ggg.hour13applicationtoolbar.ChildActivity"
-                android:parentActivityName="com.ggg.hour13applicationtoolbar.MainActivity">
+                android:parentActivityName="com.ggg.hour13applicationtoolbar.MainActivity"
+                android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
     </application>

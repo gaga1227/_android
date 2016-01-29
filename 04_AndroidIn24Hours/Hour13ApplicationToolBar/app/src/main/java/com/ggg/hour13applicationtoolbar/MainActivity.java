@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -22,6 +23,16 @@ public class MainActivity extends AppCompatActivity {
         // find toolbar view and init
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        // setup action bar
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        try {
+            // set icon
+            actionBar.setIcon(R.mipmap.ic_launcher);
+        }
+        catch (NullPointerException exp) {
+            Log.e("Error", exp.getMessage());
+        }
     }
 
 
