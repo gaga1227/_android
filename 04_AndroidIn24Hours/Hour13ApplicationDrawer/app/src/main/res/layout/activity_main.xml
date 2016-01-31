@@ -45,16 +45,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
-        <!-- LEFT DRAWER VIEW (Default based on gravity value) -->
-        <ListView android:id="@+id/left_drawer"
-                  android:layout_width="320dp"
-                  android:layout_height="match_parent"
-                  android:layout_gravity="left"
-                  android:choiceMode="singleChoice"
-                  android:divider="@android:color/transparent"
-                  android:dividerHeight="0dp"
-                  android:background="@color/colorAccent"/>
-
         <!-- RIGHT DRAWER VIEW -->
         <ListView android:id="@+id/right_drawer"
                   android:layout_width="320dp"
@@ -64,6 +54,17 @@
                   android:divider="@android:color/transparent"
                   android:dividerHeight="0dp"
                   android:background="@color/colorAccent2"/>
+
+        <!-- LEFT DRAWER VIEW (Default based on gravity value) -->
+        <!-- Putting default drawer last so it is on the very top -->
+        <ListView android:id="@+id/left_drawer"
+                  android:layout_width="320dp"
+                  android:layout_height="match_parent"
+                  android:layout_gravity="left"
+                  android:choiceMode="singleChoice"
+                  android:divider="@android:color/transparent"
+                  android:dividerHeight="0dp"
+                  android:background="@color/colorAccent"/>
 
     </android.support.v4.widget.DrawerLayout>
 
