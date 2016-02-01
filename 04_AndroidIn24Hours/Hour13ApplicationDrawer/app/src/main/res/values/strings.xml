@@ -2,4 +2,19 @@
     <string name="app_name">Sliding Drawers</string>
     <string name="drawer_open">open drawer</string>
     <string name="drawer_close">close drawer</string>
+
+    <!-- DRAWER MENUS -->
+    <string-array name="drawer_menu_left">
+        <item>About</item>
+        <item>Trending</item>
+        <item>Features</item>
+        <item>Library</item>
+        <item>News</item>
+    </string-array>
+    <string-array name="drawer_menu_right">
+        <item>Search</item>
+        <item>Help</item>
+        <item>Contact</item>
+        <item>Settings</item>
+    </string-array>
 </resources>

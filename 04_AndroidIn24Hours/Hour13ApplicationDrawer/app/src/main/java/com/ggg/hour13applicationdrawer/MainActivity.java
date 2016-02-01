@@ -8,6 +8,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -29,6 +31,10 @@ public class MainActivity extends AppCompatActivity {
     // menu list views
     private ListView drawerLeftListView;
     private ListView drawerRightListView;
+
+    // menu options
+    private String[] menuOptionsLeft;
+    private String[] menuOptionsRight;
 
 
     /**
@@ -168,6 +174,48 @@ public class MainActivity extends AppCompatActivity {
      * Drawers Menus
      */
     private void _initDrawerMenus() {
-        // TODO: 31/01/2016 adding menu items and updates dummy content
+        // get menu options data
+        menuOptionsLeft = getResources().getStringArray(R.array.drawer_menu_left);
+        menuOptionsRight = getResources().getStringArray(R.array.drawer_menu_right);
+
+        // setup menus via adaptor
+        drawerLeftListView.setAdapter(new ArrayAdapter<String>(
+                this,
+                R.layout.menu_textview_left,
+                menuOptionsLeft
+        ));
+        drawerRightListView.setAdapter(new ArrayAdapter<String>(
+                this,
+                R.layout.menu_textview_right,
+                menuOptionsRight
+        ));
+
+        // select handlers
+        drawerLeftListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // TODO: loading fragment content into content view
+
+                // set current activity title
+                setTitle(menuOptionsLeft[position]);
+                // set active menu option
+                drawerLeftListView.setItemChecked(position, true);
+                // close drawer
+                drawerLayout.closeDrawer(drawerLeftListView);
+            }
+        });
+        drawerRightListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // TODO: loading fragment content into content view
+
+                // set current activity title
+                setTitle(menuOptionsRight[position]);
+                // set active menu option
+                drawerRightListView.setItemChecked(position, true);
+                // close drawer
+                drawerLayout.closeDrawer(drawerRightListView);
+            }
+        });
     }
 }
