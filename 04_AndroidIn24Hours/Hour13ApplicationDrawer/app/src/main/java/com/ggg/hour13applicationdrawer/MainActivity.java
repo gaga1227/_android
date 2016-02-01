@@ -109,6 +109,12 @@ public class MainActivity extends AppCompatActivity {
                 if (drawerView.equals(drawerRightListView)) {
                     drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, drawerLeftListView);
                 }
+
+                // prevent menu icon being updated unless it is the default drawer
+                if (!drawerView.equals(drawerLeftListView)) {
+                    // workaround to force NOT update the menu icon
+                    super.onDrawerSlide(drawerView, 0);
+                }
             }
 
             // Called when a drawer has settled in a completely closed state.
@@ -128,14 +134,13 @@ public class MainActivity extends AppCompatActivity {
             // Called when a drawer's position changes. e.g. during sliding
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
-                super.onDrawerSlide(drawerView, slideOffset);
+                // stop animating menu icon due to it's hidden
+                super.onDrawerSlide(drawerView, 0);
             }
         };
 
         // setup DrawerToggle with DrawerLayout
         drawerLayout.setDrawerListener(drawerToggle);
-
-        // TODO: 31/01/2016 Fix right drawer updates home indicator issue
     }
 
 
