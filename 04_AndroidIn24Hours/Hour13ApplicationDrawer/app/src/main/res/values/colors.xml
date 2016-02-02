@@ -5,4 +5,7 @@
     <color name="colorAccent">#FF4081</color>
     <color name="colorAccent2">#FFC107</color>
     <color name="windowBackground">#f2f2f2</color>
+
+    <color name="colorPressed">#50000000</color>
+    <color name="colorActivated">#20000000</color>
 </resources>

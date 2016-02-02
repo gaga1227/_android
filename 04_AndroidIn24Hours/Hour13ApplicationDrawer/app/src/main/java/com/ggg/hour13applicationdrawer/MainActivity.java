@@ -1,5 +1,7 @@
 package com.ggg.hour13applicationdrawer;
 
+import android.app.FragmentManager;
+import android.content.res.Configuration;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -63,6 +65,18 @@ public class MainActivity extends AppCompatActivity {
         // Synchronize the state of the drawer indicator/affordance with the linked DrawerLayout
         // This should be called from your Activity's onPostCreate method
         drawerToggle.syncState();
+    }
+
+
+    /**
+     * onConfigurationChanged
+     */
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        // handle config update by syncState upon new config
+        drawerToggle.onConfigurationChanged(newConfig);
     }
 
 
@@ -171,6 +185,42 @@ public class MainActivity extends AppCompatActivity {
 
 
     /**
+     * _updateContent
+     * @param title
+     */
+    private void _updateContent(String title) {
+        // set current activity title
+        setTitle(title);
+
+        // create content fragment with bundle for passing title data
+        Bundle bundle = new Bundle();
+        bundle.putString("contentTitle", title);
+
+        ContentFragment contentFragment = new ContentFragment();
+        contentFragment.setArguments(bundle);
+
+        // use fragment manager to update container view
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.content_frame, contentFragment)
+                .commit();
+    }
+
+
+    /**
+     * _onDrawerItemSelect
+     * @param drawerView
+     * @param itemPosition
+     */
+    private void _onDrawerItemSelect(ListView drawerView, int itemPosition) {
+        // set active menu option
+        drawerView.setItemChecked(itemPosition, true);
+        // close drawer
+        drawerLayout.closeDrawer(drawerView);
+    }
+
+
+    /**
      * Drawers Menus
      */
     private void _initDrawerMenus() {
@@ -194,27 +244,23 @@ public class MainActivity extends AppCompatActivity {
         drawerLeftListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // TODO: loading fragment content into content view
-
-                // set current activity title
-                setTitle(menuOptionsLeft[position]);
-                // set active menu option
-                drawerLeftListView.setItemChecked(position, true);
-                // close drawer
-                drawerLayout.closeDrawer(drawerLeftListView);
+                // get selected content title
+                String title = menuOptionsLeft[position];
+                // update content with fragment
+                _updateContent(title);
+                // handle drawer item selection
+                _onDrawerItemSelect(drawerLeftListView, position);
             }
         });
         drawerRightListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // TODO: loading fragment content into content view
-
-                // set current activity title
-                setTitle(menuOptionsRight[position]);
-                // set active menu option
-                drawerRightListView.setItemChecked(position, true);
-                // close drawer
-                drawerLayout.closeDrawer(drawerRightListView);
+                // get selected content title
+                String title = menuOptionsRight[position];
+                // update content with fragment
+                _updateContent(title);
+                // handle drawer item selection
+                _onDrawerItemSelect(drawerRightListView, position);
             }
         });
     }

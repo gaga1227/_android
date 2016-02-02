@@ -7,4 +7,5 @@
           android:textSize="18sp"
           android:textStyle="bold"
           android:gravity="right"
-          android:textColor="@android:color/black" />
+          android:textColor="@android:color/black"
+          android:background="@drawable/bg_menu_item" />
