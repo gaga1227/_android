@@ -1,3 +1,6 @@
+# Windows thumbnail db
+Thumbs.db
+
 # OSX
 .DS_Store
 
@@ -30,8 +33,26 @@ proguard/
 # Log Files
 *.log
 
+# Eclipse project files
+.classpath
+.project
+
 # IntelliJ IDEA
 .idea/
 *.iml
 *.ipr
 *.iws
+
+# Android Studio
+.idea
+.gradle
+/*/local.properties
+/*/out
+/*/*/build
+build
+/*/*/production
+*.iml
+*.iws
+*.ipr
+*~
+*.swp
