@@ -1,0 +1,3 @@
+[submodule "00_Playground/Android-CleanArchitecture"]
+	path = 00_Playground/Android-CleanArchitecture
+	url = git@github.com:gaga1227/Android-CleanArchitecture.git
