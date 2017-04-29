@@ -1,4 +1,4 @@
-package ch01.ATasteOfKotlin
+package ch01
 
 data class Person(
 		val name: String,
