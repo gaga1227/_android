@@ -51,7 +51,7 @@ fun main(args: Array<String>) {
 	for (color in Color.values()) {
 		println("$color: as ${getVeggieFromColor(color)} is a ${getTemperatureFromColor(color)} color")
 	}
-	println("\nMix Red and Yellow is ${mixColors(RED, YELLOW)}")
-	println("\nMix Yellow and Blue is ${mixColorsOptimized(YELLOW, BLUE)}")
-	println("\nMix Green and Blue is ${mixColorsOptimized(GREEN, BLUE)}")
+	println("Mix Red and Yellow is ${mixColors(RED, YELLOW)}")
+	println("Mix Yellow and Blue is ${mixColorsOptimized(YELLOW, BLUE)}")
+	println("Mix Green and Blue is ${mixColorsOptimized(GREEN, BLUE)}")
 }
