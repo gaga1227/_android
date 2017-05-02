@@ -1,7 +1,7 @@
 package ch03
 
 // The function is generic
-fun <T> joinToString(
+fun <T> joinToStringJava(
 		collection: Collection<T>, // collections that contain elements of any type
 		separator: String,
 		prefix: String,
@@ -23,5 +23,5 @@ fun <T> joinToString(
 
 fun main(args: Array<String>) {
 	val list = listOf(1, 2, 3)
-	println(joinToString(list, "; ", "(", ")"))
+	println(joinToStringJava(list, "; ", "(", ")"))
 }

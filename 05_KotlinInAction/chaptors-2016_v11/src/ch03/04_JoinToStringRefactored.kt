@@ -1,7 +1,7 @@
 package ch03
 
 // The function is generic
-fun <T> joinToStringFinal(
+fun <T> joinToStringRefactored(
 		collection: Collection<T>,
 		separator: String = ", ",
 		prefix: String = "",
@@ -25,10 +25,10 @@ fun main(args: Array<String>) {
 	val list = listOf(1, 2, 3)
 
 	// omit only trailing arguments
-	println("use default values: ${joinToStringFinal(list)}")
-	println("use default values: ${joinToStringFinal(list, "-")}")
+	println("use default values: ${joinToStringRefactored(list)}")
+	println("use default values: ${joinToStringRefactored(list, "-")}")
 
 	// use named arguments, can omit some arguments from the middle,
 	// specify only the ones you need
-	println("use named params: ${joinToStringFinal(list, postfix = "}", prefix = "{")}")
+	println("use named params: ${joinToStringRefactored(list, postfix = "}", prefix = "{")}")
 }
