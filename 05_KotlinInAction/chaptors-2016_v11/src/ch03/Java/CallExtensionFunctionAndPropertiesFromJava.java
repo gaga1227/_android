@@ -6,11 +6,12 @@ import ch03.CollectionFunctions;
 import ch03.StringFunctions;
 import ch03._08_UtilityFunctionsAsExtensionsKt; // using filename if not specified
 import ch03._11_NoOverridingForExtensionFunctionsKt; // using filename if not specified
+import ch03._12_ExtensionPropertiesKt; // using filename if not specified
 
 import java.util.Arrays;
 import java.util.List;
 
-public class CallExtensionFunctionFromJava {
+public class CallExtensionFunctionAndPropertiesFromJava {
 	public static void main(String[] args) {
 		// from 06_ExtensionFunctions.kt
 		char c = StringFunctions.lastChar("Java");
@@ -28,5 +29,12 @@ public class CallExtensionFunctionFromJava {
 		View view = new Button();
 		view.click(); // will call 'Button.click()'
 		_11_NoOverridingForExtensionFunctionsKt.showOff(view); // will call 'View.showOff()'
+
+		// from 12_ExtensionProperties.kt
+		System.out.println("String last char is: " + _12_ExtensionPropertiesKt.getLastChar("Java"));
+
+		StringBuilder sbJava = new StringBuilder("Java?");
+		_12_ExtensionPropertiesKt.setLastChar(sbJava, '!');
+		System.out.println("StringBuilder last char is: " + _12_ExtensionPropertiesKt.getLastChar(sbJava));
 	}
 }
