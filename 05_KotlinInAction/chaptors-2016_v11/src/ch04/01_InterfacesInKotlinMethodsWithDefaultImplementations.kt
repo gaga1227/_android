@@ -1,7 +1,9 @@
 package ch04
 
 interface Clickable {
-	fun click()
+	fun click() // abstract, no modifier required, must be implemented
+	fun showOff() = println("I'm clickable!")
+
 	// has function body, as default methods in Java 8
 	fun sameNameSignature() = println("I'm clickable! from Clickable")
 	fun sameNameDifferentSignature(type: String) = println("I'm clickable! from Clickable $type")
