@@ -17,6 +17,8 @@ fun eval(e: Expr4): Int =
 				println("sum: $left + $right")
 				eval(e.left) + eval(e.right) // the last expression in the block is the result
 			}
+			// requires else branch to cover other possibilities
+			// where other classes might implement 'Expr4'
 			else -> throw IllegalArgumentException("Unknown expression")
 		}
 

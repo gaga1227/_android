@@ -14,6 +14,8 @@ fun eval(e: Expr): Int {
 		// normal cast e as Sum type
 		return eval((e as Sum).left) + eval((e as Sum).right)
 	}
+	// requires else branch to cover other possibilities
+	// where other classes might implement 'Expr'
 	throw IllegalArgumentException("Unknown expression")
 }
 

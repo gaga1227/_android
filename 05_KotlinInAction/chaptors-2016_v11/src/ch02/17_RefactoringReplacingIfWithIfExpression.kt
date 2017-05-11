@@ -13,6 +13,8 @@ fun eval(e: Expr2): Int =
 		else if (e is Sum2)
 		// use smart-cast after type check with val
 			eval(e.left) + eval(e.right)
+		// requires else branch to cover other possibilities
+		// where other classes might implement 'Expr2'
 		else
 			throw IllegalArgumentException("Unknown expression")
 

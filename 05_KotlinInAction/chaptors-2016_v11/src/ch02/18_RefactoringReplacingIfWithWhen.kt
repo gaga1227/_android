@@ -10,6 +10,8 @@ fun eval(e: Expr3): Int =
 		// check the type of the when argument value
 			is Num3 -> e.value
 			is Sum3 -> eval(e.left) + eval(e.right)
+			// requires else branch to cover other possibilities
+			// where other classes might implement 'Expr3'
 			else -> throw IllegalArgumentException("Unknown expression")
 		}
 
