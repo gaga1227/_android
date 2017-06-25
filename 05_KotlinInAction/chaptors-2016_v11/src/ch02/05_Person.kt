@@ -5,7 +5,11 @@ import ch02.Java.JavaPerson
 class Person(
 		val name: String, // read-only property: field with getter
 		var isMarried: Boolean // mutable property: field with getter and setter
-)
+) {
+	override fun toString(): String {
+		return "$name(${if (isMarried) "married" else "not married"})"
+	}
+}
 
 fun printPerson(person: Person) {
 	// access property directly without getters
