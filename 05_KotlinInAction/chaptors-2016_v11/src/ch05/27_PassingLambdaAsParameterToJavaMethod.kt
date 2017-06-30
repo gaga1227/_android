@@ -10,7 +10,7 @@ fun main(args: Array<String>) {
 	// is interface has only one abstract method, hence SAM (Single Abstract Method)
 	// You can pass a lambda to any Java method that expects a functional interface
 	delay = 1000L
-	javaClass.runWithDelay(delay) { println("one second's up!") }
+	javaClass.runWithDelay(delay, { println("one second's up!") })
 
 	// Using lambda without access to variable from its context like above is equivalent to
 	// creating only one instance to a static variable
@@ -22,6 +22,7 @@ fun main(args: Array<String>) {
 	// Using lambda with access to variable from its context is equivalent to
 	// creating different instances of a class for each time
 	delay = 3000L
+	// note: you can also put lambda parameter outside of parentheses
 	javaClass.runWithDelay(delay) { println("${delay / 1000} seconds delayed!") }
 	delay = 4000L
 	javaClass.runWithDelay(delay, SomeRunnable(delay))
